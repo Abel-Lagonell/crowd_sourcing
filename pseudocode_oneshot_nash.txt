@@ -1,0 +1,85 @@
+{si,i=1 to N}: set of vehicles
+{tk,k=1 to M}: set of targets 
+initialize by random pairing 
+S = {si} 
+count = N 
+while count > 0:
+	count = 0
+	while |S| > 0: 
+		si = S.pop() #pick random vehicle 
+		t1 = target(si)
+		tk = arg max_l u(si,tl)
+		if t1 not = tk: 
+			count++
+			pair(si,tk) 
+			sj = successor(si,tk)
+			if sj not = None: S.add(sj) 
+			
+
+			
+{si,i=1 to N}: set of vehicles
+{tk,k=1 to M}: set of targets 
+S = {si} 
+while |S| > 0: 
+	si = S.pop()
+	ti = closestTargetTo(si) 
+	pair(si,ti)
+
+
+def closestTargetTo(si):
+	distances = []
+	for t in targets: 
+		distances.append(getDistance(si,t))
+	return argmin(distances) 	
+
+
+
+def getTargetUtility(self,t):
+	At each target, the total observation time is equal to max arrival time + average time interval 
+	collect all time intervals 
+	normalize 
+	compute entropy
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			

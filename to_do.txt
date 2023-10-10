@@ -1,0 +1,10 @@
+Refresh git commands 
+	- How to initizliae git repo
+	- How to add and commit 
+	- How to branch off 
+	- How to merge branches into the main repo 
+Book keeping for the script
+	- create a git repo for the working directory 
+	- create a branch to start coding the setting of right reward 
+Refresh old code and see what was going on 
+Modify the code to include the new reward finding mechanism

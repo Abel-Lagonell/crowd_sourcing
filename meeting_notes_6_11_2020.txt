@@ -1,0 +1,51 @@
+######################
+Algorithm to determine reward
+######################
+oldReward <- 0  #initialization
+oldUtility <- 0
+while True: 
+	newReward <- determine the next change point
+	determine nash equilibrium 
+		if algorithm did not converge: 
+			break 
+	newUtility <- determine the total utitlity 
+	ROI <- (newUtility-oldUtility)/(newReward-oldReward)
+	if ROI < threshold: 
+		break 
+	oldReward = newReward 
+		
+		
+########################
+Alogrithm to determine next change point 
+########################
+set <- empty
+changePoint <- Infty  
+for each vehcile:
+	if target is assigned and i is the target:
+		for each target j not i: 
+			r = (ci - cj)/(di - dj) 
+	else:
+		for each target i: 
+			r = ci
+	if r > oldReward: set += r
+return min(set) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
