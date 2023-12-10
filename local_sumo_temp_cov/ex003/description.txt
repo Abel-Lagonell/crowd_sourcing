@@ -1,0 +1,3 @@
+Regular Map
+Assign nash only once (at start)
+Random Target allocation

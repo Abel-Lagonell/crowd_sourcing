@@ -1,0 +1,7 @@
+2/3/2020 
+
+
+- Increase the R value and compare results with current one 
+- Run the latest version of the code in a single shot, and compare the results with that on the grid 
+- Fix an initial configuration of target and vehicle position and change R value in a range. 
+	I want to see the utilities of tragets (pick a few targets) as a function of R.   

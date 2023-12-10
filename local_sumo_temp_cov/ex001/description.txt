@@ -1,0 +1,17 @@
+Simulation description:
+
+ 
+
+1.       Scenario: London, with downtown and suburbs. A cluster of sources in downtown, and a cluster of destinations in suburb. Random targets mid-way, perpendicular. 10000 vehicles, 25 targets.  Spread the start time of vehicles over a period. Make sure, that at any given time, there are only about 50 vehicles in the scene.
+
+2.       Routes: 2 cases
+
+a.       Case 1: For each vehicle, great random source and destination, and  assign a target which will cause the least diversion.
+
+b.       Case 2: Assign target according to Nash equilibrium.
+
+3.       Measurements:
+
+a.       For each target, measure all the sampling times.
+
+b.       For each vehicle, store source, destination, shortest path length, diversion path length, sample time (time when the vehicle reached the target), target id. 

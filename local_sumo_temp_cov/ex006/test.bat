@@ -1,0 +1,2 @@
+python simSync.py
+pause

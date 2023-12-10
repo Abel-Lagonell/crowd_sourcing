@@ -1,0 +1,5 @@
+A B {"weight":1,"id":"road1"}
+A C {"weight":3.14159,"id":"road2"}
+B D {"weight":3.000,"id":"road3"}
+A D {"weight":99,"id":"road4"}
+D E {"weight":42,"id":"road5"}

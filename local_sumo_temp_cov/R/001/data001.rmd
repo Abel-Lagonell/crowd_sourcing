@@ -1,0 +1,148 @@
+---
+title: "Spatial and Temporal Coverage, Nash vs Baseline comparison"
+author: "Quentin Goss `quentingoss0323@floridapoly.edu`"
+output:
+    html_document:
+        df_print: paged
+---
+
+```{r include=FALSE}
+# knitr::opts_chunk$set(echo=FALSE)
+```
+
+
+```{r message=FALSE, warning=FALSE}
+library('tidyverse')
+```
+
+### Introduction
+This is the first inspection of the Nash algorithm compared to the baseline algorithm for the *Spatial and Temporal Coverage Paper*.
+
+##### Simulation Setup
+**Parameter** | **Value** | **Description**
+--------------+-----------+----------------
+map           | london-seg4 | A SUMO SN of a portion of London, UK. Approximately $8000m * 6100m$ in size.
+point.spawn   | $(1534.51,1148.80)$ | The $(x,y)$ point that marks the center of vehicle start locations.
+point.sink    | $(7009.58,5560.75)$ | The $(x,y)$ point that marks the center of vehicle end locations.
+radius.spawn.sink | 250 | The distance in meters from the start/end points that a start/end may exist. *Note: This is a square radius.*
+targets       | 4 | The number of targets.
+veh.total     | 100 | The number of vehicles that will exist in the entire simulation.
+veh.exists.max| 100 | The number of vehicles that can exist at any point in time during the simulation.
+nash.R        | 500 | Reward $R$ used by the Nas hAssigner to assign vehicle trajectories
+nash.tau      | 1   | $\tau$ used by the Nash Assigner to assign vehicle trajectories
+
+*Additional Notes:* In this experiment, we assign targets with the Nash Assigner only once.
+
+
+##### Data Description
+**Column**           | **Paper Notation** | **Description**
+---------------------+--------------------+----------------
+id                   | $i$                | Vehicle ID
+source               | $s_i$              | The node ID  where the vehicle starts
+destination          | $d_i$              | The node ID  where the vehicle ends
+shortest.path.length | $s_i d_i$          | The weight of the shortest path  in seconds.  Measured by $\frac{l}{s}$ where $l$ is length in meters and $s$ is speed in meters/second.
+diversion.path.length| $s_i T_k d_i$      | The weight of the diverion path  in seconds.
+sample.time          | $t$                | Simulation time  in seconds where $t \in \mathbb{Z}_0^+$
+sample.time.diff     | $t_{ik}-\overline{t_{ik}}$ |Time since the last sample at the reward 
+target.id            | $T_k$              | The target ID.
+utility              | $u(v_n,T_k) = R(1 - e^{-\frac{t_{ik}-\overline{t_{ik}}}{\tau}})-(|s_i T_k d_i| - |s_i d_i|)$ | Utility determined from the equation in the paper.    
+
+### Helper Functions
+
+Experiment Settings
+```{r}
+reward = 500
+tau = 1
+```
+
+
+Read Vehicle .CSV function
+```{r}
+read.vehicle.csv <- function(file){
+    data <-  read.csv(
+        file=file,
+        header=TRUE,
+        sep=',',
+        colClasses=c(
+            'id' = 'character',
+            'source' = 'character',
+            'destination' = 'character',
+            'shortest.path.length' = 'double',
+            'diversion.path.length' = 'double',
+            'sample.time' = 'double',
+            'sample.time.diff' = 'double',
+            'target.id' = 'character'
+            )
+        )
+    return(as_tibble(data))
+}
+```
+
+Mutate Utility Column Function
+```{r}
+mutate.utility <- function(veh.data) {
+    veh.data <- veh.data %>%
+        mutate(utility = reward * (1 - exp(-(sample.time.diff/tau))) - (abs(diversion.path.length) - abs(shortest.path.length)))
+    return(veh.data)
+}
+```
+
+
+
+### Baseline Data
+```{r}
+baseline.dir <- "./baseline/"
+baseline.veh.csv <- paste0(baseline.dir,'vehicles.csv')
+```
+
+Data is loaded from CSV
+
+```{r}
+baseline.veh <- read.vehicle.csv(baseline.veh.csv)
+```
+
+Calculate the Utility
+```{r}
+baseline.veh <- mutate.utility(baseline.veh)
+baseline.veh
+```
+
+Summary Statistics
+```{r}
+summary(baseline.veh)
+```
+
+
+### Nash Data
+```{r}
+nash.dir <- "./nash/"
+nash.veh.csv <- paste0(nash.dir,"vehicles.csv")
+```
+
+Data Loaded from CSV
+```{r}
+nash.veh <- read.vehicle.csv(nash.veh.csv)
+```
+
+Calculate the Utility
+```{r}
+nash.veh <- mutate.utility(nash.veh)
+nash.veh
+```
+
+Summary Statistics
+```{r}
+summary(nash.veh)
+```
+
+### Comparative Statistics
+
+```{r warning=FALSE}
+ggplot() +
+    labs(title="Nash Vs Baseline", x = "Utility", y = "Sample Time Difference", color = "Method") +
+    scale_color_manual(labels = c("Baseline","Nash"), values = c("red","blue")) +
+    theme_bw() +
+    geom_point(aes(x = baseline.veh$utility, y = baseline.veh$sample.time.diff, color = "red")) +
+    geom_point(aes(x = nash.veh$utility, y = nash.veh$sample.time.diff, color = "blue"))
+```
+

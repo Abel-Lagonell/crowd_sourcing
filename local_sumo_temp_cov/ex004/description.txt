@@ -1,0 +1,5 @@
+Assign nash when:
+- The start
+- Vehicle enters game
+- Vehicle leaves game
+- Vehicle reaches target

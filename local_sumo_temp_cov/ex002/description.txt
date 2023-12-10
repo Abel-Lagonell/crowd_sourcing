@@ -1,0 +1,22 @@
+Setup:
+ - 4 targets
+ - 1 spawn
+ - 1 sink
+
+Initilization:
+ - 30 vehicles total
+ - 30 vehicles max
+
+Baseline:
+ - Go to closest reward.
+
+Nash:
+ - Determine trajectory only once
+
+Measurements:
+ - Sample time
+ - Cost of diversion
+
+Additional Notes:
+ - Create on non-discretized map.
+ - Distances should be determined before each reroute call.

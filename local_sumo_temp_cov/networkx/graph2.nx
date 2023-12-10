@@ -1,0 +1,6 @@
+# From To weight id
+A B 1 road1
+A C 3.14159 road2
+B D 3.0 road3
+A D 99 road4
+D E 42 road5
