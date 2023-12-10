@@ -34,4 +34,6 @@ In ```local_temp_cov```, the files are mostly data and graphs, while the python 
 ```local_Double_POI``` boasts the data gathered for the paper that I modified, with the majority being CSV files.
 The rest of the files are miscellaneous folders that either deal with external libraries or papers that this was written for originally.
 
-
+The original GitHubs:
+[Double POI]https://github.com/jcobra713/DoublePOI
+[SUMO temporal Coverage]https://github.com/QuentinGoss/sumo-temporal-coverage
